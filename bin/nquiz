@@ -1,0 +1,3 @@
+#!/usr/bin/env ruby
+require 'nerd_quiz'
+NerdQuiz::Quiz.new(STDIN, STDOUT, NerdQuiz::Scorecard.new).start
