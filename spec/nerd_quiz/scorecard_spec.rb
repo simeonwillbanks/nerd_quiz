@@ -21,11 +21,12 @@ module NerdQuiz
     end
 
     it 'can tell when the card is complete' do
-      subject.stub(:incomplete?).and_return(false)
+      subject.should_receive(:next_question).and_return(nil)
       subject.incomplete?.should be_false
     end
 
     it 'can tell when the card is incomplete' do
+      subject.should_receive(:next_question).and_return(0)
       subject.incomplete?.should be_true
     end
 
