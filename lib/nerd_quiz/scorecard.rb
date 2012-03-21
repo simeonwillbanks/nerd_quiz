@@ -13,6 +13,10 @@ module NerdQuiz
       "#{correct}/#{total}"
     end
 
+    def incomplete?
+      !current.nil?
+    end
+
     def right_answer!
       update RIGHT
     end
@@ -22,8 +26,12 @@ module NerdQuiz
     end
 
     private
+    def current
+      @answers.index(nil)
+    end
+
     def update(answer)
-      @answers[@answers.index(nil)] = answer
+      @answers[current] = answer
     end
 
     def correct

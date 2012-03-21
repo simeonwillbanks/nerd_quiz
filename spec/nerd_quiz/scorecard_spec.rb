@@ -20,6 +20,15 @@ module NerdQuiz
       subject.score.should eq('0/10')
     end
 
+    it 'can tell when the card is complete' do
+      subject.stub(:incomplete?).and_return(false)
+      subject.incomplete?.should be_false
+    end
+
+    it 'can tell when the card is incomplete' do
+      subject.incomplete?.should be_true
+    end
+
     it 'when an answer is right, the score changes' do
       sc = subject
       expect {
