@@ -1,3 +1,7 @@
 #!/usr/bin/env ruby
-require 'nerd_quiz'
-NerdQuiz::Quiz.new(STDIN, STDOUT, NerdQuiz::Scorecard.new).start
+if ARGV[0] == 'dev'
+  require_relative '../lib/nerd_quiz.rb'
+else
+  require 'nerd_quiz'
+end
+NerdQuiz::Quiz.new(STDIN, STDOUT, NerdQuiz::Scorecard.new).run

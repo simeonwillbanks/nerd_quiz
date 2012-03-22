@@ -1,3 +1,4 @@
+$LOAD_PATH.unshift(File.dirname(__FILE__)) if ARGV[0] == 'dev'
 require 'nerd_quiz/version'
 require 'nerd_quiz/quiz'
 require 'nerd_quiz/question'
