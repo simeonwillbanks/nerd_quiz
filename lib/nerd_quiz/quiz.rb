@@ -1,32 +1,24 @@
 module NerdQuiz
   class Quiz
 
-    def initialize(input, output, scorecard, possible=NerdQuiz::DEFAULT_NUMBER_OF_QUESTIONS)
+    def initialize(input, output, scorecard)
       @input = input
       @output = output
       @scorecard = scorecard
-      @questions = [].fill(nil, 0, possible)
     end
 
-    def start
-      @output.puts 'Welcome to Nerd Quiz'
-      continue
-    end
-
-    def current
-      @questions.index(nil)
-    end
-
-    def continue
-      unless current.nil?
-        ask current + 1
-      else
-        over
+    def run
+      start
+      while @scorecard.incomplete?
+        ask
+        listen
       end
+      over
     end
 
-    def ask(current)
-      @output.puts "Question #{current}:"
+    private
+    def ask
+      @output.puts "Question #{@scorecard.next_question + 1}:"
       @output.puts question
     end
 
@@ -38,7 +30,14 @@ module NerdQuiz
         @output.puts 'Wrong!'
         @scorecard.wrong_answer!
       end
-      continue
+    end
+
+    def reply
+      @input.gets.strip
+    end
+
+    def start
+      @output.puts 'Welcome to Nerd Quiz'
     end
 
     def over
@@ -46,7 +45,6 @@ module NerdQuiz
       @output.puts @scorecard.score
     end
 
-    private
     def question
       @question = NerdQuiz::Question.get
       @question.text
@@ -54,10 +52,6 @@ module NerdQuiz
 
     def answer
       @question.answer
-    end
-
-    def reply
-      @input.gets
     end
   end
 end

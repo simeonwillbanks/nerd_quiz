@@ -10,90 +10,72 @@ module NerdQuiz
     subject         { Quiz.new(input, output, scorecard) }
 
     before(:each) do
-      NerdQuiz::Question.stub(:get).and_return(mock(NerdQuiz::Question, :question => question, :answer => answer))
+      NerdQuiz::Question.stub(:get).and_return(mock(NerdQuiz::Question, :text => question, :answer => answer))
+      subject.stub(:answer).and_return(answer)
     end
 
-    describe '#start' do
+    describe '#run' do
       it 'sends a welcome message' do
         output.should_receive(:puts).with('Welcome to Nerd Quiz')
-        subject.start
+        subject.run
       end
 
-      it 'asks the first question' do
-        output.should_receive(:puts).with('Question 1:')
-        subject.start
+      it 'asks all the questions' do
+        subject.should_receive(:ask).exactly(10).times
+        subject.run
       end
 
-      it 'via the first call to #continue' do
-        subject.should_receive(:continue)
-        subject.start
-      end
-    end
-
-    describe '#ask' do
-      it 'sends the question text' do
-        output.should_receive(:puts).with(question)
-        subject.ask(1)
+      it 'labels each question' do
+        (1..10).each do |i|
+          output.should_receive(:puts).with("Question #{i}:").once
+        end
+        subject.run
       end
 
-      it 'and includes the current question number' do
-        output.should_receive(:puts).with('Question 5:')
-        subject.ask(5)
+      it 'listens for answers' do
+        input.stub(:gets).and_return(answer)
+        scorecard.should_receive(:incomplete?).and_return(true, true, true, true, true, true, true, true, true, true, false)
+        subject.should_receive(:listen).exactly(10).times
+        subject.run
       end
-    end
 
-    describe '#continue' do
-      it 'decides to ask another question' do
-        subject.stub(:questions).and_return([nil])
-        subject.should_receive(:ask)
-        subject.continue
+      it 'notifies it received the right answer' do
+        scorecard.should_receive(:incomplete?).and_return(true, true, true, true, true, true, true, true, true, true, false)
+        subject.stub(:reply).and_return(answer)
+        output.should_receive(:puts).with('Right!').exactly(10).times
+        subject.run
       end
-      it 'ends the quiz after last question' do
-        subject.stub(:current).and_return(nil)
-        subject.should_receive(:over)
-        subject.continue
-      end
-    end
 
-    describe '#over' do
+      it 'tallies the right answer' do
+        scorecard.should_receive(:incomplete?).and_return(true, true, true, true, true, true, true, true, true, true, false)
+        input.stub(:gets).and_return(answer, answer, answer, answer, answer, answer, answer, answer, answer, answer)
+        scorecard.should_receive(:right_answer!).exactly(10).times
+        subject.run
+      end
+
+      it 'notifies it received the wrong answer' do
+        scorecard.should_receive(:incomplete?).and_return(true, true, true, true, true, true, true, true, true, true, false)
+        subject.stub(:reply).and_return('Pizza, of course')
+        output.should_receive(:puts).with('Wrong!').exactly(10).times
+        subject.run
+      end
+
+      it 'tallies the wrong answer' do
+        scorecard.should_receive(:incomplete?).and_return(true, true, true, true, true, true, true, true, true, true, false)
+        input.stub(:gets).and_return('Pizza, of course', 'Pizza, of course', 'Pizza, of course', 'Pizza, of course', 'Pizza, of course', 'Pizza, of course', 'Pizza, of course', 'Pizza, of course', 'Pizza, of course', 'Pizza, of course')
+        scorecard.should_receive(:wrong_answer!).exactly(10).times
+        subject.run
+      end
+
       it 'proclaims the quiz over' do
         output.should_receive(:puts).with('Thanks For Playing!')
-        subject.over
+        subject.run
       end
-      it 'and displays the final score' do
+
+      it 'displays the final score' do
         scorecard.stub(:score).and_return('10/10')
         output.should_receive(:puts).with('10/10')
-        subject.over
-      end
-    end
-
-    describe '#listen' do
-      before(:each) do
-        subject.stub(:answer).and_return(answer)
-      end
-
-      it 'receives the right question answer' do
-        input.stub(:gets).and_return(answer)
-        output.should_receive(:puts).with('Right!')
-        subject.listen
-      end
-
-      it 'and tallies the right answer' do
-        subject.stub(:reply).and_return(answer)
-        scorecard.should_receive(:right_answer!)
-        subject.listen
-      end
-
-      it 'receives the wrong question answer' do
-        input.stub(:gets).and_return('Pizza, of course')
-        output.should_receive(:puts).with('Wrong!')
-        subject.listen
-      end
-
-      it 'and tallies the wrong answer' do
-        subject.stub(:reply).and_return('Pizza, of course')
-        scorecard.should_receive(:wrong_answer!)
-        subject.listen
+        subject.run
       end
     end
   end
