@@ -40,15 +40,15 @@ module NerdQuiz
       end
 
       it 'notifies it received the right answer' do
-        scorecard.should_receive(:incomplete?).and_return(true, true, true, true, true, true, true, true, true, true, false)
         subject.stub(:reply).and_return(answer)
+        scorecard.should_receive(:incomplete?).and_return(true, true, true, true, true, true, true, true, true, true, false)
         output.should_receive(:puts).with('Right!').exactly(10).times
         subject.run
       end
 
       it 'tallies the right answer' do
-        scorecard.should_receive(:incomplete?).and_return(true, true, true, true, true, true, true, true, true, true, false)
         input.stub(:gets).and_return(answer, answer, answer, answer, answer, answer, answer, answer, answer, answer)
+        scorecard.should_receive(:incomplete?).and_return(true, true, true, true, true, true, true, true, true, true, false)
         scorecard.should_receive(:right_answer!).exactly(10).times
         subject.run
       end
@@ -61,8 +61,8 @@ module NerdQuiz
       end
 
       it 'tallies the wrong answer' do
-        scorecard.should_receive(:incomplete?).and_return(true, true, true, true, true, true, true, true, true, true, false)
         input.stub(:gets).and_return('Pizza, of course', 'Pizza, of course', 'Pizza, of course', 'Pizza, of course', 'Pizza, of course', 'Pizza, of course', 'Pizza, of course', 'Pizza, of course', 'Pizza, of course', 'Pizza, of course')
+        scorecard.should_receive(:incomplete?).and_return(true, true, true, true, true, true, true, true, true, true, false)
         scorecard.should_receive(:wrong_answer!).exactly(10).times
         subject.run
       end
