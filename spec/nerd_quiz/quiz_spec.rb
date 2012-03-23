@@ -10,6 +10,8 @@ module NerdQuiz
     subject         { Quiz.new(input, output, scorecard) }
 
     before(:each) do
+      subject.stub(:questions).and_return(nil)
+      subject.stub(:question).and_return(question)
       subject.stub(:answer).and_return(answer)
     end
 
@@ -19,6 +21,10 @@ module NerdQuiz
     end
 
     describe '#run' do
+      it 'loads all the questions' do
+        subject.should_receive(:questions).once
+      end
+
       it 'sends a welcome message' do
         output.should_receive(:puts).with('Welcome to Nerd Quiz')
       end

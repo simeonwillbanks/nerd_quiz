@@ -8,6 +8,7 @@ module NerdQuiz
     end
 
     def run
+      questions
       start
       while @scorecard.incomplete?
         ask
@@ -45,8 +46,12 @@ module NerdQuiz
       @output.puts @scorecard.score
     end
 
+    def questions
+      @questions = NerdQuiz::Questions.get
+    end
+
     def question
-      @question = NerdQuiz::Question.get
+      @question = @questions.pop
       @question.text
     end
 
