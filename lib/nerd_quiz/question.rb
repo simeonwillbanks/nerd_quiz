@@ -22,26 +22,45 @@ module NerdQuiz
       @question[:answer]
     end
 
+    def label
+      set
+      @question[:label]
+    end
+
     private
 
     def set
-      parse and extract if @question.empty?
+      if @question.empty?
+        parse
+        extract_text
+        extract_answer
+        extract_label
+      end
     end
 
     def parse
-      @parsed = Yajl::Parser.new.parse(File.new(@path, 'r'))
+      @parsed = Yajl::Parser.new.parse(File.new(@path, 'r'))["question"]
     end
 
-    def extract
-      parsed_question = @parsed["question"]
-      question = []
-      question << parsed_question["text"]
+    def extract_text
+      text = []
+      text << @parsed["text"]
       (1..4).each do |i|
         key = "a#{i}"
-        question << "#{key}) #{parsed_question[key]}"
+        text << "#{key}) #{@parsed[key]}"
       end
-      @question[:text] = question.join("\n")
-      @question[:answer] = parsed_question["right_answer"]
+      @question[:text] = text.join("\n")
+    end
+
+    def extract_answer
+      @question[:answer] = @parsed["right_answer"]
+    end
+
+    def extract_label
+      label = []
+      label << @parsed["category"]
+      label << @parsed["sub_category"] unless @parsed["category"] == @parsed["sub_category"]
+      @question[:label] = "(#{label.join(" - ")})"
     end
   end
 end

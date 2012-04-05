@@ -12,6 +12,7 @@ module NerdQuiz
         "a4) drinking, so I put a hat in your pocket so you can listen while you dance!"
       end
       let(:answer) { "a2" }
+      let(:label) { "(culture)" }
 
       subject { Question.get(path) }
 
@@ -23,6 +24,12 @@ module NerdQuiz
         subject.should respond_to :text
         subject.text.should be_a String
         subject.text.should eq(text)
+      end
+
+      it 'and the the label text' do
+        subject.should respond_to :label
+        subject.label.should be_a String
+        subject.label.should eq(label)
       end
 
       it 'and the the answer text' do
