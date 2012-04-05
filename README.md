@@ -11,5 +11,5 @@ A ruby gem which implements a command line interface to NerdPursuit questions
 ## License
 Released under the MIT License.  See the [LICENSE][license] file for further details.
 
-[license]: https://github.com/simeonwillbanks/nerd_quiz/blob/master/LICENSE.md
+[license]: https://github.com/simeonwillbanks/nerd_quiz/blob/master/LICENSE
 
