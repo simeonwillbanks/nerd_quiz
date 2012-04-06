@@ -19,18 +19,20 @@ module NerdQuiz
     end
 
     private
+
     def ask
-      @output.puts set_color("Question #{@scorecard.next_question + 1} #{label}:", :blue)
-      @output.puts question
+      out("Question #{@scorecard.next_question + 1} #{label}:", :blue)
+      out(question)
     end
 
     def listen
       if reply == answer
-        @output.puts set_color('Right!', :green, true)
+        out('Right!', :green, :bold)
         @scorecard.right_answer!
       else
-        @output.puts set_color('Wrong!', :red, true)
-        @output.puts set_color('You should have answered ', :red) + set_color(answer, :red, true)
+        out('Wrong!', :red, :bold)
+        # Do not nest ANSI sequences, so directly call set_color
+        out(set_color('You should have answered ', :red) + set_color(answer, :red, true))
         @scorecard.wrong_answer!
       end
     end
@@ -40,12 +42,12 @@ module NerdQuiz
     end
 
     def start
-      @output.puts set_color('Welcome to Nerd Quiz', :blue)
+      out('Welcome to Nerd Quiz', :blue)
     end
 
     def over
-      @output.puts set_color('Thanks For Playing!', :blue)
-      @output.puts set_color("Final Score #{@scorecard.score}", :yellow)
+      out('Thanks For Playing!', :blue)
+      out("Final Score #{@scorecard.score}", :yellow)
     end
 
     def questions
@@ -63,6 +65,16 @@ module NerdQuiz
 
     def answer
       @question.answer
+    end
+
+    def out(*args)
+      text = args[0]
+      unless args[1].nil?
+        color = args[1] || false
+        bold = args[2].is_a?(Symbol) ? true : false
+        text = set_color(text, color, bold)
+      end
+      @output.puts text
     end
   end
 end

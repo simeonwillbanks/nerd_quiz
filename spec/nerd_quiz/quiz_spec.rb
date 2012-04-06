@@ -74,7 +74,7 @@ module NerdQuiz
           end
 
           it 'and displays the right answer' do
-            output.should_receive(:puts).with("\e[31mYou should have answered \e[0m\e[1m\e[31m#{answer}\e[0m").exactly(10).times
+            output.should_receive(:puts).with("\e[31mYou should have answered \e[0m\e[1m\e[31m42\e[0m").exactly(10).times
           end
 
           it 'tallies the wrong answer' do
