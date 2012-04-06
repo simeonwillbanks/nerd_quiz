@@ -13,12 +13,11 @@ Gem::Specification.new do |s|
 
   s.rubyforge_project = 'nerd_quiz'
 
-  s.files         = [".gitignore",
+  s.files         = [".rspec",
+                      ".gitignore",
                       ".gitmodules",
-                      ".rspec",
                       "Gemfile",
                       "LICENSE",
-                      "NerdPursuit",
                       "README.md",
                       "Rakefile",
                       "STORIES.md",
@@ -202,11 +201,12 @@ Gem::Specification.new do |s|
                       "NerdPursuit/questions/who_invented_node_js.json",
                       "NerdPursuit/questions/who_is_the_first_character_to_b.json",
                       "NerdPursuit/questions/yo_dawg.json",
-                      "NerdPursuit/questions/z-index_property.json"] 
-  s.test_files    = ["spec/nerd_quiz/question_spec.rb", 
-                     "spec/nerd_quiz/questions_spec.rb", 
-                     "spec/nerd_quiz/quiz_spec.rb", 
-                     "spec/nerd_quiz/scorecard_spec.rb", 
+                      "NerdPursuit/questions/z-index_property.json"]
+  s.test_files    = [".rspec",
+                     "spec/nerd_quiz/question_spec.rb",
+                     "spec/nerd_quiz/questions_spec.rb",
+                     "spec/nerd_quiz/quiz_spec.rb",
+                     "spec/nerd_quiz/scorecard_spec.rb",
                      "spec/spec_helper.rb"]
   s.executables   = %w(nquiz)
   s.require_paths = ['lib']
