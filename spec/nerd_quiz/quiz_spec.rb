@@ -4,7 +4,7 @@ module NerdQuiz
   describe Quiz do
     let(:question)  { 'What is the answer to life, the universe and everything?' }
     let(:answer)    { '42' }
-    let(:label)    { '(culture)' }
+    let(:label)     { '(culture)' }
     let(:output)    { double('output').as_null_object }
     let(:input)     { double('input').as_null_object }
     let(:scorecard) { NerdQuiz::Scorecard.new }
