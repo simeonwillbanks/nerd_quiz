@@ -14,6 +14,7 @@ Gem::Specification.new do |s|
   s.rubyforge_project = 'nerd_quiz'
 
   s.files         = [".rspec",
+                      ".travis.yml",
                       ".gitignore",
                       ".gitmodules",
                       "Gemfile",
