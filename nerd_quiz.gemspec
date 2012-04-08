@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version     = NerdQuiz::VERSION
   s.authors     = ['Simeon F. Willbanks']
   s.email       = ['sfw@simeonfosterwillbanks.com']
-  s.homepage    = 'https://github.com/simeonwillbanks/nerd_quiz'
+  s.homepage    = 'http://simeonwillbanks.github.com/nerd_quiz/'
   s.summary     = %q{A ruby gem which implements a command line interface to NerdPursuit questions}
   s.description = %q{Test your nerd skills by answering NerdPursuit questions!}
 
