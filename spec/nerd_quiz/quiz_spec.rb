@@ -95,6 +95,10 @@ module NerdQuiz
       it 'always says bye' do
         output.should_receive(:puts).with("\e[1m\e[34mBye!\e[0m")
       end
+
+      it 'catches SIGINTs' do
+        Signal.should_receive(:trap).with('INT', 'EXIT').once
+      end
     end
   end
 end

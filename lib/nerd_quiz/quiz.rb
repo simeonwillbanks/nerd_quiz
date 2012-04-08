@@ -6,10 +6,10 @@ module NerdQuiz
       @input = input
       @output = output
       @scorecard = scorecard
-      Signal.trap('INT', 'EXIT')
     end
 
     def run
+      handle_signals
       questions
       start
       while @scorecard.incomplete?
@@ -82,6 +82,10 @@ module NerdQuiz
         text = set_color(text, color, bold)
       end
       @output.puts text
+    end
+
+    def handle_signals
+      Signal.trap('INT', 'EXIT')
     end
   end
 end
