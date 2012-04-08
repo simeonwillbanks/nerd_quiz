@@ -3,7 +3,7 @@ require 'spec_helper'
 module NerdQuiz
   describe Question do
     describe '.get' do
-      let(:path) { "/Users/simeon/Projects/nerd_quiz/NerdPursuit/questions/yo_dawg.json" }
+      let(:path) { File.expand_path('../../../NerdPursuit/questions/yo_dawg.json', __FILE__) }
       let(:text) do
         "Yo dawg, I herd you like ...\n" +
         "a1) music, so I put a tape in your pants so you can listen while you sleep!\n" +
