@@ -91,6 +91,10 @@ module NerdQuiz
         scorecard.stub(:score).and_return('10/10')
         output.should_receive(:puts).with("\e[33mFinal Score 10/10\e[0m")
       end
+
+      it 'always says bye' do
+        output.should_receive(:puts).with("\e[1m\e[34mBye!\e[0m")
+      end
     end
   end
 end

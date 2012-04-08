@@ -6,6 +6,7 @@ module NerdQuiz
       @input = input
       @output = output
       @scorecard = scorecard
+      Signal.trap('INT', 'EXIT')
     end
 
     def run
@@ -16,9 +17,15 @@ module NerdQuiz
         listen
       end
       over
+    ensure
+      bye
     end
 
     private
+
+    def bye
+      out('Bye!', :blue, :bold)
+    end
 
     def ask
       out("Question #{@scorecard.next_question + 1} #{label}:", :blue)
