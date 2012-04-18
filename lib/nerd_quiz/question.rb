@@ -47,13 +47,13 @@ module NerdQuiz
       text << @parsed["text"]
       (1..4).each do |i|
         key = "a#{i}"
-        text << "#{key}) #{@parsed[key]}"
+        text << "#{i}) #{@parsed[key]}"
       end
       @question[:text] = text.join("\n")
     end
 
     def extract_answer
-      @question[:answer] = @parsed["right_answer"]
+      @question[:answer] = @parsed["right_answer"][1]
     end
 
     def extract_label

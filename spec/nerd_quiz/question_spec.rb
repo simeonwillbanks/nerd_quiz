@@ -6,12 +6,12 @@ module NerdQuiz
       let(:path) { File.expand_path('../../../NerdPursuit/questions/yo_dawg.json', __FILE__) }
       let(:text) do
         "Yo dawg, I herd you like ...\n" +
-        "a1) music, so I put a tape in your pants so you can listen while you sleep!\n" +
-        "a2) cars, so I put a car in your car so you can drive while you drive!\n" +
-        "a3) cheating, so I put a bread in your bag so you can run while you eat!\n" +
-        "a4) drinking, so I put a hat in your pocket so you can listen while you dance!"
+        "1) music, so I put a tape in your pants so you can listen while you sleep!\n" +
+        "2) cars, so I put a car in your car so you can drive while you drive!\n" +
+        "3) cheating, so I put a bread in your bag so you can run while you eat!\n" +
+        "4) drinking, so I put a hat in your pocket so you can listen while you dance!"
       end
-      let(:answer) { "a2" }
+      let(:answer) { "2" }
       let(:label) { "(culture)" }
 
       subject { Question.get(path) }
