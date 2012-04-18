@@ -17,12 +17,12 @@ module NerdQuiz
       subject.stub(:answer).and_return(answer)
     end
 
-    # Only public API is the run loop, so it must be run for each test
-    after(:each) do
-      subject.run
-    end
-
     describe '#run' do
+      # Only public API is the run loop, so it must be run for each test
+      after(:each) do
+        subject.run
+      end
+
       it 'loads all the questions' do
         subject.should_receive(:questions).once
       end
@@ -99,6 +99,14 @@ module NerdQuiz
       it 'catches SIGINTs' do
         Signal.should_receive(:trap).with('INT', 'EXIT').once
       end
+    end
+
+    it 'exits when sent Ctrl-D (EOF)' do
+      lambda {
+        input.stub(:gets).and_return(nil)
+        output.should_receive(:send).with(:puts, "\e[1m\e[34mBye!\e[0m")
+        subject.run
+      }.should raise_error(SystemExit)
     end
   end
 end

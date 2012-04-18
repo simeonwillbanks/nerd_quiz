@@ -46,7 +46,10 @@ module NerdQuiz
     end
 
     def reply
-      @input.gets.strip
+      reply = @input.gets
+      # Ctrl-D (EOF) user action cause @input.gets to be nil
+      # On this action, lets exit like the user asked
+      reply.nil? ? exit : reply.strip
     end
 
     def start
