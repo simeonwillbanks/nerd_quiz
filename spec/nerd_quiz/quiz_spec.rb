@@ -5,7 +5,7 @@ module NerdQuiz
     let(:question)  { 'What is the answer to life, the universe and everything?' }
     let(:answer)    { '42' }
     let(:label)     { '(culture)' }
-    let(:output)    { double('output').as_null_object }
+    let(:output)    { double('output', :send => "").as_null_object }
     let(:input)     { double('input').as_null_object }
     let(:scorecard) { NerdQuiz::Scorecard.new }
     subject         { Quiz.new(input, output, scorecard) }
@@ -28,7 +28,7 @@ module NerdQuiz
       end
 
       it 'sends a welcome message' do
-        output.should_receive(:puts).with("\e[34mWelcome to Nerd Quiz\e[0m")
+        output.should_receive(:send).with(:puts, "\e[34mWelcome to Nerd Quiz\e[0m")
       end
 
       it 'asks all the questions' do
@@ -37,7 +37,7 @@ module NerdQuiz
 
       it 'labels each question' do
         (1..10).each do |i|
-          output.should_receive(:puts).with("\e[34mQuestion #{i} (culture):\e[0m").once
+          output.should_receive(:send).with(:puts, "\e[34mQuestion #{i} (culture):\e[0m").once
         end
       end
 
@@ -56,7 +56,7 @@ module NerdQuiz
           end
 
           it 'notifies it received the right answer' do
-            output.should_receive(:puts).with("\e[1m\e[32mRight!\e[0m").exactly(10).times
+            output.should_receive(:send).with(:puts, "\e[1m\e[32mRight!\e[0m").exactly(10).times
           end
 
           it 'tallies the right answer' do
@@ -70,11 +70,11 @@ module NerdQuiz
           end
 
           it 'notifies it received the wrong answer' do
-            output.should_receive(:puts).with("\e[1m\e[31mWrong!\e[0m").exactly(10).times
+            output.should_receive(:send).with(:puts, "\e[1m\e[31mWrong!\e[0m").exactly(10).times
           end
 
           it 'and displays the right answer' do
-            output.should_receive(:puts).with("\e[31mYou should have answered \e[0m\e[1m\e[31m42\e[0m").exactly(10).times
+            output.should_receive(:send).with(:puts, "\e[31mYou should have answered \e[0m\e[1m\e[31m42\e[0m").exactly(10).times
           end
 
           it 'tallies the wrong answer' do
@@ -84,16 +84,16 @@ module NerdQuiz
       end
 
       it 'proclaims the quiz over' do
-        output.should_receive(:puts).with("\e[34mThanks For Playing!\e[0m")
+        output.should_receive(:send).with(:puts, "\e[34mThanks For Playing!\e[0m")
       end
 
       it 'displays the final score' do
         scorecard.stub(:score).and_return('10/10')
-        output.should_receive(:puts).with("\e[33mFinal Score 10/10\e[0m")
+        output.should_receive(:send).with(:puts, "\e[33mFinal Score 10/10\e[0m")
       end
 
       it 'always says bye' do
-        output.should_receive(:puts).with("\e[1m\e[34mBye!\e[0m")
+        output.should_receive(:send).with(:puts, "\e[1m\e[34mBye!\e[0m")
       end
 
       it 'catches SIGINTs' do

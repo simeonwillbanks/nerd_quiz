@@ -30,6 +30,7 @@ module NerdQuiz
     def ask
       out("Question #{@scorecard.next_question + 1} #{label}:", :blue)
       out(question)
+      out('>> ', :blue, :bold, :no_new_line)
     end
 
     def listen
@@ -81,7 +82,8 @@ module NerdQuiz
         bold = args[2].is_a?(Symbol) ? true : false
         text = set_color(text, color, bold)
       end
-      @output.puts text
+      method = args[3].nil? ? :puts : :print
+      @output.send(method, text)
     end
 
     def handle_signals
