@@ -3,16 +3,16 @@ require 'spec_helper'
 module NerdQuiz
   describe Question do
     describe '.get' do
-      let(:path) { File.expand_path('../../../NerdPursuit/questions/yo_dawg.json', __FILE__) }
+      let(:path) { File.expand_path('../../../NerdPursuit/questions/kernel-sprintf-2.json', __FILE__) }
       let(:text) do
-        "Yo dawg, I herd you like ...\n" +
-        "1) music, so I put a tape in your pants so you can listen while you sleep!\n" +
-        "2) cars, so I put a car in your car so you can drive while you drive!\n" +
-        "3) cheating, so I put a bread in your bag so you can run while you eat!\n" +
-        "4) drinking, so I put a hat in your pocket so you can listen while you dance!"
+        "What's the output of '%-020s' % 'dude is here'?\n" +
+        "1) dude is here\n" +
+        "2) \"dude is here        \"\n" +
+        "3) \"        dude is here\"\n" +
+        "4) dude is"
       end
       let(:answer) { "2" }
-      let(:label) { "(culture)" }
+      let(:label) { "(backend - ruby)" }
 
       subject { Question.get(path) }
 

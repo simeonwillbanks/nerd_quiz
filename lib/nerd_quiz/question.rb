@@ -47,7 +47,9 @@ module NerdQuiz
       text << @parsed["text"]
       (1..4).each do |i|
         key = "a#{i}"
-        text << "#{i}) #{@parsed[key]}"
+        # When the answer has significant whitespace, wrap the answer in quotes
+        answer = @parsed[key] =~ /^\s/ || @parsed[key] =~ /\s$/ ? "\"#{@parsed[key]}\"" : @parsed[key]
+        text << "#{i}) #{answer}"
       end
       @question[:text] = text.join("\n")
     end
