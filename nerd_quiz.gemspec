@@ -52,7 +52,7 @@ Gem::Specification.new do |s|
   s.license = 'MIT'
 
   # specify any dependencies here; for example:
-  s.add_dependency 'yajl-ruby'
+  s.add_dependency 'oj'
   s.add_development_dependency 'rake'
   s.add_development_dependency 'rspec'
 end

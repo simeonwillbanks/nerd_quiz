@@ -1,5 +1,5 @@
 $LOAD_PATH.unshift(File.dirname(__FILE__)) if ARGV[0] == 'dev'
-require 'yajl'
+require 'oj'
 %w{ version color quiz question questions scorecard }.each do |f|
   require 'nerd_quiz/' + f
 end

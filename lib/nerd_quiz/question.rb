@@ -39,7 +39,7 @@ module NerdQuiz
     end
 
     def parse
-      @parsed = Yajl::Parser.new.parse(File.new(@path, 'r'))["question"]
+      @parsed = Oj.load(File.new(@path, 'r'))["question"]
     end
 
     def extract_text
